@@ -190,11 +190,140 @@
   .lb-close { position:absolute; top:28px; right:38px; font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:3px; color:var(--text-dim); cursor:pointer; background:none; border:none; text-transform:uppercase; transition:color .3s; }
   .lb-close:hover { color:var(--accent1); }
 
+  /* ── CONTACT ── */
+  .contact { position: relative; z-index: 2; padding: 80px 60px 120px; }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    border: 1px solid var(--border);
+  }
+
+  .contact-bio {
+    background: var(--panel);
+    padding: 52px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative corner bracket big */
+  .contact-bio::before {
+    content: '';
+    position: absolute;
+    top: 24px; left: 24px;
+    width: 40px; height: 40px;
+    border-top: 2px solid rgba(0,212,255,.2);
+    border-left: 2px solid rgba(0,212,255,.2);
+    pointer-events: none;
+  }
+  .contact-bio::after {
+    content: '';
+    position: absolute;
+    bottom: 24px; right: 24px;
+    width: 40px; height: 40px;
+    border-bottom: 2px solid rgba(0,212,255,.2);
+    border-right: 2px solid rgba(0,212,255,.2);
+    pointer-events: none;
+  }
+
+  .contact-bio-eyebrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; letter-spacing: 6px;
+    color: var(--accent1); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .contact-bio-eyebrow::before { content:''; display:block; width:28px; height:1px; background:var(--accent1); }
+
+  .contact-bio-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700; font-size: 32px;
+    letter-spacing: 2px; color: var(--text-bright);
+    text-transform: uppercase; margin-bottom: 28px;
+    line-height: 1.1;
+  }
+  .contact-bio-name span { color: var(--accent1); }
+
+  .contact-bio-text {
+    font-size: 13px; line-height: 1.9;
+    color: var(--text-dim);
+  }
+
+  .contact-bio-skills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 32px;
+  }
+
+  .skill-chip {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; letter-spacing: 2px;
+    color: var(--accent1);
+    background: rgba(0,212,255,.05);
+    border: 1px solid rgba(0,212,255,.2);
+    padding: 5px 12px; text-transform: uppercase;
+  }
+
+  /* Right panel: links */
+  .contact-links {
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    border-left: 1px solid var(--border);
+  }
+
+  .contact-link-item {
+    flex: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 44px;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    transition: background .3s;
+    position: relative;
+    overflow: hidden;
+    min-height: 110px;
+  }
+  .contact-link-item:last-child { border-bottom: none; }
+  .contact-link-item::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent1);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform .35s ease;
+  }
+  .contact-link-item:hover::before { transform: scaleY(1); }
+  .contact-link-item:hover { background: rgba(0,212,255,.04); }
+  .contact-link-item.linkedin::before { background: #0a66c2; }
+  .contact-link-item.linkedin:hover { background: rgba(10,102,194,.05); }
+
+  .link-meta { display: flex; flex-direction: column; gap: 6px; }
+  .link-type {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px; letter-spacing: 5px;
+    color: var(--text-dim); text-transform: uppercase;
+  }
+  .link-value {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600; font-size: 17px;
+    letter-spacing: 1px; color: var(--text-bright);
+    transition: color .3s;
+  }
+  .contact-link-item:hover .link-value { color: var(--accent1); }
+  .contact-link-item.linkedin:hover .link-value { color: #5b9bd5; }
+
+  .link-arrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 20px; color: var(--text-dim);
+    transition: transform .3s, color .3s;
+  }
+  .contact-link-item:hover .link-arrow { transform: translateX(6px); color: var(--accent1); }
+  .contact-link-item.linkedin:hover .link-arrow { color: #5b9bd5; }
+
   /* ── RESPONSIVE ── */
   @media(max-width:900px){
     header{padding:0 24px;}
     nav{display:none;}
-    .hero,.category,.divider{padding-left:24px;padding-right:24px;}
+    .hero,.category,.divider,.contact{padding-left:24px;padding-right:24px;}
     footer{padding:40px 24px;flex-wrap:wrap;gap:16px;}
     .grid,.pair{grid-template-columns:1fr;}
     .card.wide{grid-column:span 1;}
@@ -203,6 +332,10 @@
     .deco{display:none;}
     .cat-head{flex-wrap:wrap;gap:16px;}
     .cat-desc{text-align:left;}
+    .contact-inner{grid-template-columns:1fr;}
+    .contact-bio{padding:40px 32px;}
+    .contact-links{border-left:none;border-top:1px solid var(--border);}
+    .contact-link-item{min-height:90px;padding:0 28px;}
   }
 </style>
 </head>
@@ -224,6 +357,7 @@
     <a href="#rccars">RC CARS</a>
     <a href="#aviones">AVIONES</a>
     <a href="#wings">FLYING WINGS</a>
+    <a href="#contacto">CONTACTO</a>
   </nav>
   <div class="status"><span class="dot"></span>SISTEMA ACTIVO</div>
 </header>
@@ -459,6 +593,77 @@
     <div class="pair-img" onclick="openLb('img/wings/Wingc3nit.jpg')">
       <img src="img/wings/Wingc3nit.jpg" alt="Flying Wing cenital">
     </div>
+  </div>
+</section>
+
+<div class="hline"></div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- CONTACTO                               -->
+<!-- ══════════════════════════════════════ -->
+<section class="contact" id="contacto">
+  <div class="cat-head fi">
+    <div>
+      <div class="cat-idx">// CAT-04 //</div>
+      <div class="cat-title c1">CONTACTO</div>
+    </div>
+    <p class="cat-desc">Perfil profesional y canales de contacto directo.</p>
+  </div>
+
+  <div class="contact-inner fi">
+
+    <!-- BIO -->
+    <div class="contact-bio">
+      <div class="contact-bio-eyebrow">PERFIL PROFESIONAL</div>
+      <div class="contact-bio-name">Daniel<br><span>Aparicio</span> Vázquez</div>
+      <p class="contact-bio-text">
+        Soy de esos afortunados que hacen en el trabajo casi lo mismo que en casa como hobbie.
+        Diseño de productos IOT completos, incluidos PCB, envolvente e impresión 3D, gestionando
+        también las demás fases del producto.<br><br>
+        Actualmente trabajo en diseño hardware, firmware y envolvente de sistemas de posicionamiento
+        3D en interiores. Anteriormente he diseñado, entre otros, productos para control remoto de
+        alumbrado, medición de energía y medición volumétrica por ultrasonidos y TOF, con
+        comunicaciones LoRa, Sigfox y LTE.<br><br>
+        Inglés fluido hablado y escrito en cualquier ámbito <em style="color:var(--accent1);font-style:normal">(Acreditado)</em>.
+      </p>
+      <div class="contact-bio-skills">
+        <span class="skill-chip">PCB Design</span>
+        <span class="skill-chip">Firmware</span>
+        <span class="skill-chip">3D Print</span>
+        <span class="skill-chip">IoT</span>
+        <span class="skill-chip">LoRa</span>
+        <span class="skill-chip">Sigfox</span>
+        <span class="skill-chip">LTE</span>
+        <span class="skill-chip">Ultrasonidos</span>
+        <span class="skill-chip">TOF</span>
+        <span class="skill-chip">Indoor Positioning</span>
+      </div>
+    </div>
+
+    <!-- LINKS -->
+    <div class="contact-links">
+      <a class="contact-link-item" href="mailto:danielapariciovazquez@gmail.com">
+        <div class="link-meta">
+          <div class="link-type">// EMAIL //</div>
+          <div class="link-value">danielapariciovazquez@gmail.com</div>
+        </div>
+        <div class="link-arrow">→</div>
+      </a>
+      <a class="contact-link-item linkedin" href="https://www.linkedin.com/in/daniel-aparicio-v%C3%A1zquez-9776aa84/" target="_blank" rel="noopener">
+        <div class="link-meta">
+          <div class="link-type">// LINKEDIN //</div>
+          <div class="link-value">Daniel Aparicio Vázquez</div>
+        </div>
+        <div class="link-arrow">→</div>
+      </a>
+      <div class="contact-link-item" style="cursor:default;pointer-events:none;">
+        <div class="link-meta">
+          <div class="link-type">// ESPECIALIDAD //</div>
+          <div class="link-value" style="font-size:14px;line-height:1.4">Hardware · Firmware<br>IoT · 3D Print · Posicionamiento</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
