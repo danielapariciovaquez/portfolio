@@ -404,12 +404,82 @@
   }
   .mobile-menu a:hover .m-arrow { transform: translateX(6px); color: var(--accent1); }
 
+  /* ── VIDEO SECTION ── */
+  .video-section { position: relative; z-index: 2; padding: 0 60px 120px; }
+
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    background: #000;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .video-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(0,212,255,0.08);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  /* corner brackets on video */
+  .video-wrapper .cc { pointer-events: none; }
+
+  .video-wrapper video {
+    width: 100%;
+    display: block;
+    max-height: 70vh;
+    object-fit: contain;
+    background: #000;
+  }
+
+  /* ── CREDITS ── */
+  .credits {
+    position: relative;
+    z-index: 2;
+    padding: 32px 60px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: rgba(0,212,255,0.015);
+  }
+
+  .credits-line {
+    flex: 1;
+    max-width: 160px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border));
+  }
+  .credits-line.r {
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  .credits-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .credits-text a {
+    color: var(--accent1);
+    text-decoration: none;
+    transition: opacity .3s;
+  }
+  .credits-text a:hover { opacity: 0.7; }
+
   /* ── RESPONSIVE ── */
   @media(max-width:900px){
     header{padding:0 24px;}
     nav{display:none;}
     .hamburger{display:flex;}
-    .hero,.category,.divider,.contact{padding-left:24px;padding-right:24px;}
+    .hero,.category,.divider,.contact,.video-section{padding-left:24px;padding-right:24px;}
     footer{padding:40px 24px;flex-wrap:wrap;gap:16px;}
     .grid,.pair{grid-template-columns:1fr;}
     .card.wide{grid-column:span 1;}
@@ -422,6 +492,7 @@
     .contact-bio{padding:40px 32px;}
     .contact-links{border-left:none;border-top:1px solid var(--border);}
     .contact-link-item{min-height:90px;padding:0 28px;}
+    .credits{padding:28px 24px;}
   }
 </style>
 </head>
@@ -443,6 +514,7 @@
     <a href="#rccars">RC CARS</a>
     <a href="#aviones">AVIONES</a>
     <a href="#wings">FLYING WINGS</a>
+    <a href="#video">VÍDEO</a>
     <a href="#contacto">CONTACTO</a>
   </nav>
   <div class="status"><span class="dot"></span>SISTEMA ACTIVO</div>
@@ -468,8 +540,13 @@
     <span>Flying Wings</span>
     <span class="m-arrow">→</span>
   </a>
-  <a href="#contacto" class="mobile-link">
+  <a href="#video" class="mobile-link">
     <span class="m-idx">04 //</span>
+    <span>Vídeo</span>
+    <span class="m-arrow">→</span>
+  </a>
+  <a href="#contacto" class="mobile-link">
+    <span class="m-idx">05 //</span>
     <span>Contacto</span>
     <span class="m-arrow">→</span>
   </a>
@@ -780,12 +857,51 @@
   </div>
 </section>
 
+<div class="hline"></div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- VÍDEO                                  -->
+<!-- ══════════════════════════════════════ -->
+<section class="video-section" id="video" style="padding-top:80px">
+  <div class="cat-head fi">
+    <div>
+      <div class="cat-idx">// CAT-05 //</div>
+      <div class="cat-title c1">VÍDEO</div>
+    </div>
+    <p class="cat-desc">Demo en acción de los proyectos del taller.</p>
+  </div>
+
+  <div class="video-wrapper fi">
+    <div class="cc tl"></div><div class="cc tr"></div>
+    <div class="cc bl"></div><div class="cc br"></div>
+    <video
+      controls
+      playsinline
+      preload="metadata"
+      poster=""
+    >
+      <source src="video/Video_Project.mp4" type="video/mp4">
+      Tu navegador no soporta la reproducción de vídeo.
+    </video>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="fl">RC <span>BUILD</span> LAB</div>
   <div class="fline"></div>
   <div class="fc">PERSONAL WORKSHOP // ALL BUILDS HANDMADE</div>
 </footer>
+
+<!-- CRÉDITOS -->
+<div class="credits">
+  <div class="credits-line"></div>
+  <div class="credits-text">
+    Web creada con <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>
+    &nbsp;//&nbsp; Daniel Aparicio Vázquez
+  </div>
+  <div class="credits-line r"></div>
+</div>
 
 <script>
   // Fade-in on scroll
