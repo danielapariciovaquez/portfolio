@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RC BUILD LAB — Proyectos de Modelismo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Exo+2:wght@100;200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050810;
+    --panel: #0a1020;
+    --border: #1a2a4a;
+    --accent1: #00d4ff;
+    --accent2: #00ff88;
+    --accent3: #ff4500;
+    --text: #c8d8f0;
+    --text-dim: #4a6080;
+    --text-bright: #e8f4ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scan line */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -3px; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(transparent, rgba(0,212,255,0.35), transparent);
+    animation: scan 8s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+  @keyframes scan { 0% { top: -3px; } 100% { top: 100%; } }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    padding: 0 60px; height: 80px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: rgba(5,8,16,0.92);
+    backdrop-filter: blur(20px);
+  }
+  .logo { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 22px; letter-spacing: 4px; color: var(--text-bright); text-transform: uppercase; }
+  .logo span { color: var(--accent1); text-shadow: 0 0 20px var(--accent1); }
+  .logo-sub { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 6px; color: var(--text-dim); margin-top: 2px; }
+  nav { display: flex; gap: 40px; }
+  nav a { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--text-dim); text-decoration: none; text-transform: uppercase; transition: color 0.3s; position: relative; }
+  nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--accent1); transition: width 0.3s; }
+  nav a:hover { color: var(--accent1); }
+  nav a:hover::after { width: 100%; }
+  .status { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent2); box-shadow: 0 0 10px var(--accent2); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ── TICKER ── */
+  .ticker { position: relative; z-index: 2; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; padding: 12px 0; background: rgba(0,212,255,0.015); }
+  .ticker-inner { display: flex; white-space: nowrap; animation: tick 28s linear infinite; }
+  .ticker-item { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--text-dim); padding: 0 40px; text-transform: uppercase; }
+  .ticker-item em { color: var(--accent1); font-style: normal; margin-right: 8px; }
+  @keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* ── HERO ── */
+  .hero { position: relative; z-index: 2; padding: 120px 60px 100px; overflow: hidden; }
+  .hero-eyebrow { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 6px; color: var(--accent1); margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+  .hero-eyebrow::before { content:''; display:block; width:40px; height:1px; background:var(--accent1); }
+  h1 { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: clamp(52px,8vw,112px); line-height: 0.88; color: var(--text-bright); letter-spacing: -2px; margin-bottom: 40px; }
+  h1 .hollow { color: transparent; -webkit-text-stroke: 1px rgba(200,216,240,0.25); }
+  h1 .glow { color: var(--accent1); text-shadow: 0 0 50px rgba(0,212,255,0.6); }
+  .hero-desc { max-width: 480px; font-size: 14px; line-height: 1.85; color: var(--text-dim); margin-bottom: 64px; padding-left: 56px; border-left: 1px solid var(--border); }
+  .hero-stats { display: flex; gap: 56px; }
+  .stat-num { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 38px; color: var(--text-bright); line-height: 1; }
+  .stat-num sup { color: var(--accent1); font-size: 22px; }
+  .stat-label { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 4px; color: var(--text-dim); margin-top: 4px; text-transform: uppercase; }
+
+  /* Hero deco lines */
+  .deco { position: absolute; right: 80px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; pointer-events: none; }
+  .dline { height: 1px; background: linear-gradient(90deg, transparent, var(--accent1), transparent); animation: lf 4s ease-in-out infinite; opacity: 0.1; }
+  .dline:nth-child(1){width:280px;animation-delay:0s}
+  .dline:nth-child(2){width:190px;animation-delay:.6s}
+  .dline:nth-child(3){width:240px;animation-delay:1.2s}
+  .dline:nth-child(4){width:160px;animation-delay:1.8s}
+  .dline:nth-child(5){width:210px;animation-delay:2.4s}
+  @keyframes lf{0%,100%{opacity:.1}50%{opacity:.45}}
+
+  /* ── DIVIDER ── */
+  .divider { position: relative; z-index: 2; padding: 0 60px; margin-bottom: 72px; display: flex; align-items: center; gap: 24px; }
+  .dl { flex:1; height:1px; opacity:.25; }
+  .dl.l { background: linear-gradient(90deg, var(--accent1), transparent); }
+  .dl.r { background: linear-gradient(90deg, transparent, var(--accent1)); }
+  .dlabel { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 6px; color: var(--text-dim); text-transform: uppercase; white-space: nowrap; }
+
+  /* ── CATEGORY ── */
+  .category { position: relative; z-index: 2; padding: 0 60px 120px; }
+  .cat-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 56px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .cat-idx { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 4px; color: var(--text-dim); margin-bottom: 8px; }
+  .cat-title { font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 44px; letter-spacing: 2px; text-transform: uppercase; line-height: 1; }
+  .cat-title.c1 { color: var(--accent1); text-shadow: 0 0 30px rgba(0,212,255,.4); }
+  .cat-title.c2 { color: var(--accent3); text-shadow: 0 0 30px rgba(255,69,0,.4); }
+  .cat-title.c3 { color: var(--accent2); text-shadow: 0 0 30px rgba(0,255,136,.4); }
+  .cat-desc { font-size: 13px; color: var(--text-dim); text-align: right; max-width: 260px; line-height: 1.75; }
+
+  /* ── VEHICLE CARDS ── */
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  .grid.solo { grid-template-columns: 1fr; }
+
+  .card { position: relative; background: var(--panel); border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: border-color .4s; }
+  .card:hover { border-color: var(--accent1); }
+  .card.g:hover { border-color: var(--accent2); }
+  .card.o:hover { border-color: var(--accent3); }
+  .card.wide { grid-column: span 2; }
+
+  .img-wrap { position: relative; overflow: hidden; height: 300px; }
+  .card.wide .img-wrap { height: 400px; }
+  .img-wrap img { width:100%; height:100%; object-fit:cover; transition: transform .6s, filter .4s; filter: brightness(.82) saturate(.88); }
+  .card:hover .img-wrap img { transform: scale(1.06); filter: brightness(1) saturate(1.1); }
+
+  /* Corner brackets */
+  .cc { position:absolute; width:18px; height:18px; z-index:3; pointer-events:none; }
+  .cc.tl{top:12px;left:12px;border-top:2px solid var(--accent1);border-left:2px solid var(--accent1);}
+  .cc.tr{top:12px;right:12px;border-top:2px solid var(--accent1);border-right:2px solid var(--accent1);}
+  .cc.bl{bottom:12px;left:12px;border-bottom:2px solid var(--accent1);border-left:2px solid var(--accent1);}
+  .cc.br{bottom:12px;right:12px;border-bottom:2px solid var(--accent1);border-right:2px solid var(--accent1);}
+  .card.g .cc{border-color:var(--accent2)!important;}
+  .card.o .cc{border-color:var(--accent3)!important;}
+
+  .overlay { position:absolute; bottom:0; left:0; right:0; height:55%; background:linear-gradient(transparent,rgba(5,8,16,.96)); pointer-events:none; }
+
+  .badge { position:absolute; top:14px; right:14px; background:rgba(5,8,16,.88); border:1px solid var(--accent1); padding:4px 10px; font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:3px; color:var(--accent1); text-transform:uppercase; z-index:4; }
+  .card.g .badge { border-color:var(--accent2); color:var(--accent2); }
+  .card.o .badge { border-color:var(--accent3); color:var(--accent3); }
+
+  .info { padding: 22px 26px 26px; }
+  .build-num { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:4px; color:var(--text-dim); margin-bottom:7px; }
+  .build-name { font-family:'Rajdhani',sans-serif; font-weight:600; font-size:20px; letter-spacing:2px; color:var(--text-bright); text-transform:uppercase; line-height:1.1; margin-bottom:10px; }
+  .build-desc { font-size:12px; line-height:1.75; color:var(--text-dim); }
+  .tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+  .tag { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:2px; color:var(--text-dim); background:rgba(255,255,255,.03); border:1px solid var(--border); padding:4px 10px; text-transform:uppercase; }
+  .tag.hi { border-color:rgba(0,212,255,.3); color:var(--accent1); background:rgba(0,212,255,.04); }
+  .card.g .tag.hi { border-color:rgba(0,255,136,.3); color:var(--accent2); background:rgba(0,255,136,.04); }
+  .card.o .tag.hi { border-color:rgba(255,69,0,.3); color:var(--accent3); background:rgba(255,69,0,.04); }
+
+  /* ── PHOTO PAIR ── */
+  .pair { display:grid; grid-template-columns:1fr 1fr; gap:2px; margin-top:2px; }
+  .pair-img { height:220px; overflow:hidden; border:1px solid var(--border); cursor:pointer; }
+  .pair-img img { width:100%; height:100%; object-fit:cover; transition:transform .5s, filter .4s; filter:brightness(.78) saturate(.8); }
+  .pair-img:hover img { transform:scale(1.07); filter:brightness(1) saturate(1.15); }
+
+  .hline { width:100%; height:1px; background:linear-gradient(90deg,transparent,var(--border),transparent); }
+
+  /* ── FOOTER ── */
+  footer { position:relative; z-index:2; padding:56px 60px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+  .fl { font-family:'Rajdhani',sans-serif; font-weight:700; font-size:16px; letter-spacing:4px; color:var(--text-dim); }
+  .fl span { color:var(--accent1); }
+  .fline { flex:1; height:1px; background:var(--border); margin:0 40px; }
+  .fc { font-family:'Share Tech Mono',monospace; font-size:9px; letter-spacing:3px; color:var(--text-dim); }
+
+  /* ── FADE IN ── */
+  .fi { opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s ease; }
+  .fi.on { opacity:1; transform:translateY(0); }
+
+  /* ── LIGHTBOX ── */
+  .lb { display:none; position:fixed; inset:0; background:rgba(5,8,16,.97); z-index:1000; align-items:center; justify-content:center; }
+  .lb.on { display:flex; }
+  .lb img { max-width:90vw; max-height:90vh; object-fit:contain; border:1px solid var(--border); }
+  .lb-close { position:absolute; top:28px; right:38px; font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:3px; color:var(--text-dim); cursor:pointer; background:none; border:none; text-transform:uppercase; transition:color .3s; }
+  .lb-close:hover { color:var(--accent1); }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:900px){
+    header{padding:0 24px;}
+    nav{display:none;}
+    .hero,.category,.divider{padding-left:24px;padding-right:24px;}
+    footer{padding:40px 24px;flex-wrap:wrap;gap:16px;}
+    .grid,.pair{grid-template-columns:1fr;}
+    .card.wide{grid-column:span 1;}
+    h1{font-size:52px;}
+    .hero-stats{flex-wrap:wrap;gap:28px;}
+    .deco{display:none;}
+    .cat-head{flex-wrap:wrap;gap:16px;}
+    .cat-desc{text-align:left;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="closeLb()">
+  <button class="lb-close">[ ESC ] CERRAR</button>
+  <img id="lb-img" src="" alt="" onclick="event.stopPropagation()">
+</div>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <div class="logo">RC <span>BUILD</span> LAB</div>
+    <div class="logo-sub">PERSONAL WORKSHOP // MODELISMO</div>
+  </div>
+  <nav>
+    <a href="#rccars">RC CARS</a>
+    <a href="#aviones">AVIONES</a>
+    <a href="#wings">FLYING WINGS</a>
+  </nav>
+  <div class="status"><span class="dot"></span>SISTEMA ACTIVO</div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item"><em>//</em>4X SKID STEER</span>
+    <span class="ticker-item"><em>//</em>4WS STEERING</span>
+    <span class="ticker-item"><em>//</em>RASPBERRY PI</span>
+    <span class="ticker-item"><em>//</em>RS485 MOTORS</span>
+    <span class="ticker-item"><em>//</em>CESSNA TRAINER</span>
+    <span class="ticker-item"><em>//</em>FLYING WING</span>
+    <span class="ticker-item"><em>//</em>BRUSHLESS MOTOR</span>
+    <span class="ticker-item"><em>//</em>LIPO BATTERY</span>
+    <span class="ticker-item"><em>//</em>ELEVON CONTROL</span>
+    <span class="ticker-item"><em>//</em>EPP FOAM BUILD</span>
+    <span class="ticker-item"><em>//</em>3D PRINT CHASSIS</span>
+    <!-- repeat -->
+    <span class="ticker-item"><em>//</em>4X SKID STEER</span>
+    <span class="ticker-item"><em>//</em>4WS STEERING</span>
+    <span class="ticker-item"><em>//</em>RASPBERRY PI</span>
+    <span class="ticker-item"><em>//</em>RS485 MOTORS</span>
+    <span class="ticker-item"><em>//</em>CESSNA TRAINER</span>
+    <span class="ticker-item"><em>//</em>FLYING WING</span>
+    <span class="ticker-item"><em>//</em>BRUSHLESS MOTOR</span>
+    <span class="ticker-item"><em>//</em>LIPO BATTERY</span>
+    <span class="ticker-item"><em>//</em>ELEVON CONTROL</span>
+    <span class="ticker-item"><em>//</em>EPP FOAM BUILD</span>
+    <span class="ticker-item"><em>//</em>3D PRINT CHASSIS</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">WORKSHOP PORTFOLIO</div>
+  <h1>
+    BUILDS<br>
+    <span class="hollow">CUSTOM</span><br>
+    <span class="glow">LAB</span>
+  </h1>
+  <p class="hero-desc">
+    Colección personal de vehículos RC diseñados y ensamblados desde cero.
+    Coches todo terreno con electrónica avanzada, aviones de espuma
+    y alas volantes construidos con precisión artesanal.
+  </p>
+  <div class="hero-stats">
+    <div><div class="stat-num">04<sup>+</sup></div><div class="stat-label">Builds</div></div>
+    <div><div class="stat-num">03</div><div class="stat-label">Categorías</div></div>
+    <div><div class="stat-num">100<sup>%</sup></div><div class="stat-label">DIY</div></div>
+  </div>
+  <div class="deco">
+    <div class="dline"></div><div class="dline"></div><div class="dline"></div>
+    <div class="dline"></div><div class="dline"></div>
+  </div>
+</section>
+
+<div class="divider fi">
+  <div class="dl l"></div>
+  <div class="dlabel">// ARCHIVO DE PROYECTOS //</div>
+  <div class="dl r"></div>
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- CAT 01 — RC CARS                      -->
+<!-- ══════════════════════════════════════ -->
+<section class="category" id="rccars">
+  <div class="cat-head fi">
+    <div>
+      <div class="cat-idx">// CAT-01 //</div>
+      <div class="cat-title c1">RC CARS</div>
+    </div>
+    <p class="cat-desc">Plataformas terrestres todo terreno con integración de electrónica avanzada y control inteligente.</p>
+  </div>
+
+  <div class="grid fi">
+
+    <!-- 4X SKID STEER -->
+    <div class="card" onclick="openLb('img/cars/4XSKID.jpg')">
+      <div class="img-wrap">
+        <div class="cc tl"></div><div class="cc tr"></div>
+        <div class="cc bl"></div><div class="cc br"></div>
+        <img src="img/cars/4XSKID.jpg" alt="4X Skid Steer lateral">
+        <div class="overlay"></div>
+        <div class="badge">SKID STEER</div>
+      </div>
+      <div class="info">
+        <div class="build-num">// BUILD-001 //</div>
+        <div class="build-name">4X Skid Steer<br>Raspberry Pi Edition</div>
+        <p class="build-desc">Buggy 4WD con dirección diferencial (skid steer). Chasis impreso en 3D color verde. Raspberry Pi como cerebro de control, comunicación RS485 via Waveshare para cuatro motores con encoders independientes.</p>
+        <div class="tags">
+          <span class="tag hi">Raspberry Pi</span>
+          <span class="tag hi">RS485</span>
+          <span class="tag">Skid Steer</span>
+          <span class="tag">3D Print</span>
+          <span class="tag">4 Motores</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4WS -->
+    <div class="card" onclick="openLb('img/cars/4WS.jpg')">
+      <div class="img-wrap">
+        <div class="cc tl"></div><div class="cc tr"></div>
+        <div class="cc bl"></div><div class="cc br"></div>
+        <img src="img/cars/4WS.jpg" alt="4WS lateral">
+        <div class="overlay"></div>
+        <div class="badge">4WS</div>
+      </div>
+      <div class="info">
+        <div class="build-num">// BUILD-002 //</div>
+        <div class="build-name">4WS Custom Toys<br>4-Wheel Steering</div>
+        <p class="build-desc">Buggy rojo con chasis de aluminio anodizado y dirección en los cuatro ejes (4WS). Suspensiones independientes, motor brushed Surpass Hobby, ESC y servo Aztec. Máxima maniobrabilidad.</p>
+        <div class="tags">
+          <span class="tag hi">4WS</span>
+          <span class="tag hi">Brushed Motor</span>
+          <span class="tag">Aluminum</span>
+          <span class="tag">Ind. Suspension</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Photo pair -->
+  <div class="pair fi">
+    <div class="pair-img" onclick="openLb('img/cars/4XSKIDcenit.jpg')">
+      <img src="img/cars/4XSKIDcenit.jpg" alt="4X Skid Steer cenital">
+    </div>
+    <div class="pair-img" onclick="openLb('img/cars/4WScenit.jpg')">
+      <img src="img/cars/4WScenit.jpg" alt="4WS cenital">
+    </div>
+  </div>
+</section>
+
+<div class="hline"></div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- CAT 02 — AVIONES                      -->
+<!-- ══════════════════════════════════════ -->
+<section class="category" id="aviones" style="padding-top:80px">
+  <div class="cat-head fi">
+    <div>
+      <div class="cat-idx">// CAT-02 //</div>
+      <div class="cat-title c2">AVIONES RC</div>
+    </div>
+    <p class="cat-desc">Aeronaves de fuselaje convencional en espuma EPO con motor brushless tractor.</p>
+  </div>
+
+  <div class="grid solo fi">
+
+    <!-- CESSNA -->
+    <div class="card o wide" onclick="openLb('img/aviones/Cessnalateral.jpg')">
+      <div class="img-wrap">
+        <div class="cc tl"></div><div class="cc tr"></div>
+        <div class="cc bl"></div><div class="cc br"></div>
+        <img src="img/aviones/Cessnalateral.jpg" alt="Cessna Trainer lateral">
+        <div class="overlay"></div>
+        <div class="badge">TRACTOR</div>
+      </div>
+      <div class="info">
+        <div class="build-num">// BUILD-003 //</div>
+        <div class="build-name">Cessna Trainer<br>Blanco & Rojo</div>
+        <p class="build-desc">Avión entrenador estilo Cessna fabricado en espuma EPO. Motor brushless tractor en la nariz con hélice bicolor azul. Fuselaje blanco con acentos rojos en cola, alas y estabilizadores. Tren de aterrizaje fijo triciclo, estable y predecible en vuelo.</p>
+        <div class="tags">
+          <span class="tag hi">Brushless Tractor</span>
+          <span class="tag hi">EPO Foam</span>
+          <span class="tag">Fixed Gear</span>
+          <span class="tag">Trainer</span>
+          <span class="tag">Aileron + Elevator</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pair fi">
+    <div class="pair-img" onclick="openLb('img/aviones/Cessnalateral.jpg')">
+      <img src="img/aviones/Cessnalateral.jpg" alt="Cessna lateral">
+    </div>
+    <div class="pair-img" onclick="openLb('img/aviones/CessnaCenit.jpg')">
+      <img src="img/aviones/CessnaCenit.jpg" alt="Cessna cenital">
+    </div>
+  </div>
+</section>
+
+<div class="hline"></div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- CAT 03 — FLYING WINGS                 -->
+<!-- ══════════════════════════════════════ -->
+<section class="category" id="wings" style="padding-top:80px">
+  <div class="cat-head fi">
+    <div>
+      <div class="cat-idx">// CAT-03 //</div>
+      <div class="cat-title c3">FLYING WINGS</div>
+    </div>
+    <p class="cat-desc">Alas volantes delta puras, sin fuselaje, mínima resistencia y máxima eficiencia aerodinámica.</p>
+  </div>
+
+  <div class="grid solo fi">
+
+    <!-- WING -->
+    <div class="card g wide" onclick="openLb('img/wings/Wing.jpg')">
+      <div class="img-wrap">
+        <div class="cc tl"></div><div class="cc tr"></div>
+        <div class="cc bl"></div><div class="cc br"></div>
+        <img src="img/wings/Wing.jpg" alt="Flying Wing lateral">
+        <div class="overlay"></div>
+        <div class="badge">DELTA WING</div>
+      </div>
+      <div class="info">
+        <div class="build-num">// BUILD-004 //</div>
+        <div class="build-name">Delta Wing<br>Verde Neón</div>
+        <p class="build-desc">Ala volante de gran envergadura en espuma EPP verde neón. Motor pusher en la parte trasera de la quilla. Control de cabeceo y alabeo mediante elevones integrados en los bordes de fuga. Baterías LiPo cilíndricas en la bahía central. Sin fuselaje, sin resistencia parásita.</p>
+        <div class="tags">
+          <span class="tag hi">Flying Wing</span>
+          <span class="tag hi">Elevons</span>
+          <span class="tag">Pusher Motor</span>
+          <span class="tag">EPP Foam</span>
+          <span class="tag">LiPo</span>
+          <span class="tag">Flysky RC</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="pair fi">
+    <div class="pair-img" onclick="openLb('img/wings/Wing.jpg')">
+      <img src="img/wings/Wing.jpg" alt="Flying Wing lateral">
+    </div>
+    <div class="pair-img" onclick="openLb('img/wings/Wingc3nit.jpg')">
+      <img src="img/wings/Wingc3nit.jpg" alt="Flying Wing cenital">
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl">RC <span>BUILD</span> LAB</div>
+  <div class="fline"></div>
+  <div class="fc">PERSONAL WORKSHOP // ALL BUILDS HANDMADE</div>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('on'), i * 80);
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fi').forEach(el => io.observe(el));
+
+  // Lightbox
+  function openLb(src) {
+    document.getElementById('lb-img').src = src;
+    document.getElementById('lb').classList.add('on');
+  }
+  function closeLb() {
+    document.getElementById('lb').classList.remove('on');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>
