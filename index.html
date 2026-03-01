@@ -127,6 +127,7 @@
   /* ── VEHICLE CARDS ── */
   .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
   .grid.solo { grid-template-columns: 1fr; }
+  .grid.grid-3 { grid-template-columns: repeat(3, 1fr); }
 
   .card { position: relative; background: var(--panel); border: 1px solid var(--border); overflow: hidden; cursor: pointer; transition: border-color .4s; }
   .card:hover { border-color: var(--accent1); }
@@ -570,7 +571,7 @@
     .hamburger{display:flex;}
     .hero,.category,.divider,.contact,.video-section{padding-left:24px;padding-right:24px;}
     footer{padding:40px 24px;flex-wrap:wrap;gap:16px;}
-    .grid,.pair{grid-template-columns:1fr;}
+    .grid,.grid.grid-3,.pair{grid-template-columns:1fr;}
     .card.wide{grid-column:span 1;}
     h1{font-size:52px;}
     .hero-stats{flex-wrap:wrap;gap:28px;}
@@ -603,7 +604,7 @@
     <a href="#rccars">RC CARS</a>
     <a href="#aviones">AVIONES</a>
     <a href="#wings">FLYING WINGS</a>
-    <a href="#cubos">CUBOS</a>
+    <a href="#cubos">CUBOS DE RUBIK</a>
     <a href="#contacto">CONTACTO</a>
   </nav>
   <div class="status"><span class="dot"></span>SISTEMA ACTIVO</div>
@@ -631,7 +632,7 @@
   </a>
   <a href="#cubos" class="mobile-link">
     <span class="m-idx">04 //</span>
-    <span>Cubos Rubik</span>
+    <span>Cubos de Rubik</span>
     <span class="m-arrow">→</span>
   </a>
   <a href="#contacto" class="mobile-link">
@@ -904,7 +905,7 @@
     <p class="cat-desc">Puzzles mecánicos de precisión con sistemas de giro magnético impresos en 3D.</p>
   </div>
 
-  <div class="grid fi">
+  <div class="grid grid-3 fi">
 
     <!-- CARD principal: cubo ensamblado -->
     <div class="card p" onclick="openLb('img/cubos/cubo2x2-lateral.jpg')">
@@ -947,6 +948,28 @@
           <span class="tag hi">Embedded Magnets</span>
           <span class="tag">Corner Piece</span>
           <span class="tag">No Screws</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: render 3D CAD -->
+    <div class="card p" onclick="openLb('img/cubos/cubo2x2-render.png')">
+      <div class="img-wrap">
+        <div class="cc tl"></div><div class="cc tr"></div>
+        <div class="cc bl"></div><div class="cc br"></div>
+        <img src="img/cubos/cubo2x2-render.png" alt="Render 3D CAD cubo 2x2">
+        <div class="overlay"></div>
+        <div class="badge">RENDER CAD</div>
+      </div>
+      <div class="info">
+        <div class="build-num">// CAD MODEL //</div>
+        <div class="build-name">Render 3D<br>Diseño CAD</div>
+        <p class="build-desc">Render del modelo CAD con sección explosionada. Se visualiza perfectamente la esfera de acero central en su posición de trabajo, rodeada por los ocho corners imantados. El diseño paramétrico permite ajustar la tensión magnética variando el diámetro de la cavidad del imán.</p>
+        <div class="tags">
+          <span class="tag hi">CAD Design</span>
+          <span class="tag hi">Section View</span>
+          <span class="tag">Parametric</span>
+          <span class="tag">FDM Print</span>
         </div>
       </div>
     </div>
