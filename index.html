@@ -404,6 +404,72 @@
   }
   .mobile-menu a:hover .m-arrow { transform: translateX(6px); color: var(--accent1); }
 
+  /* ── CUBO ACCENT COLOR ── */
+  .c4 { color: #bf5fff; text-shadow: 0 0 30px rgba(191,95,255,.4); }
+  .card.p:hover { border-color: #bf5fff; }
+  .card.p .cc { border-color: #bf5fff !important; }
+  .card.p .badge { border-color: #bf5fff; color: #bf5fff; }
+  .card.p .tag.hi { border-color: rgba(191,95,255,.3); color: #bf5fff; background: rgba(191,95,255,.04); }
+
+  /* Mechanic diagram */
+  .mech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 2px;
+  }
+  .mech-item {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 28px 24px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s;
+  }
+  .mech-item:hover { border-color: #bf5fff; }
+  .mech-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #bf5fff, transparent);
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .mech-item:hover::before { opacity: 1; }
+  .mech-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: rgba(191,95,255,.15);
+    position: absolute;
+    top: 12px; right: 16px;
+    line-height: 1;
+  }
+  .mech-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .mech-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #bf5fff;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .mech-desc {
+    font-size: 12px;
+    line-height: 1.75;
+    color: var(--text-dim);
+  }
+
+  @media(max-width:900px){
+    .mech-grid { grid-template-columns: 1fr; }
+  }
+
   /* ── VIDEO LABEL ── */
   .video-label {
     display: flex;
@@ -537,6 +603,7 @@
     <a href="#rccars">RC CARS</a>
     <a href="#aviones">AVIONES</a>
     <a href="#wings">FLYING WINGS</a>
+    <a href="#cubos">CUBOS</a>
     <a href="#contacto">CONTACTO</a>
   </nav>
   <div class="status"><span class="dot"></span>SISTEMA ACTIVO</div>
@@ -562,8 +629,13 @@
     <span>Flying Wings</span>
     <span class="m-arrow">→</span>
   </a>
-  <a href="#contacto" class="mobile-link">
+  <a href="#cubos" class="mobile-link">
     <span class="m-idx">04 //</span>
+    <span>Cubos Rubik</span>
+    <span class="m-arrow">→</span>
+  </a>
+  <a href="#contacto" class="mobile-link">
+    <span class="m-idx">05 //</span>
     <span>Contacto</span>
     <span class="m-arrow">→</span>
   </a>
@@ -821,6 +893,108 @@
 <div class="hline"></div>
 
 <!-- ══════════════════════════════════════ -->
+<!-- CAT 04 — CUBOS DE RUBIK               -->
+<!-- ══════════════════════════════════════ -->
+<section class="category" id="cubos" style="padding-top:80px">
+  <div class="cat-head fi">
+    <div>
+      <div class="cat-idx">// CAT-04 //</div>
+      <div class="cat-title c4">CUBOS DE RUBIK</div>
+    </div>
+    <p class="cat-desc">Puzzles mecánicos de precisión con sistemas de giro magnético impresos en 3D.</p>
+  </div>
+
+  <div class="grid fi">
+
+    <!-- CARD principal: cubo ensamblado -->
+    <div class="card p" onclick="openLb('img/cubos/cubo2x2-lateral.jpg')">
+      <div class="img-wrap">
+        <div class="cc tl"></div><div class="cc tr"></div>
+        <div class="cc bl"></div><div class="cc br"></div>
+        <img src="img/cubos/cubo2x2-lateral.jpg" alt="Cubo 2x2 magnético ensamblado">
+        <div class="overlay"></div>
+        <div class="badge">2×2 MAGNÉTICO</div>
+      </div>
+      <div class="info">
+        <div class="build-num">// BUILD-005 //</div>
+        <div class="build-name">Cubo 2×2<br>Magnetic Ball Core</div>
+        <p class="build-desc">Cubo de Rubik 2×2 completamente impreso en 3D con sistema de retención magnético. En lugar del eje convencional, utiliza una esfera de acero en el centro que actúa como pivot omnidireccional, mantenida en su posición por imanes embutidos en cada pieza corner. Stickers personalizados de colores.</p>
+        <div class="tags">
+          <span class="tag hi">3D Print</span>
+          <span class="tag hi">Magnetic Core</span>
+          <span class="tag">Steel Ball</span>
+          <span class="tag">Custom Stickers</span>
+          <span class="tag">2×2 Puzzle</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD: cubo desmontado mostrando mecanismo -->
+    <div class="card p" onclick="openLb('img/cubos/cubo2x2-desmontado.jpg')">
+      <div class="img-wrap">
+        <div class="cc tl"></div><div class="cc tr"></div>
+        <div class="cc bl"></div><div class="cc br"></div>
+        <img src="img/cubos/cubo2x2-desmontado.jpg" alt="Cubo 2x2 desmontado mecanismo">
+        <div class="overlay"></div>
+        <div class="badge">MECANISMO</div>
+      </div>
+      <div class="info">
+        <div class="build-num">// DETAIL //</div>
+        <div class="build-name">Interior<br>Sistema de Pivote</div>
+        <p class="build-desc">Vista del mecanismo con una pieza corner extraída. Se aprecia claramente la esfera de acero central y el imán alojado en la cavidad interior de cada corner. La atracción magnética entre la bola y los imanes es lo que mantiene el cubo unido permitiendo rotación libre en todos los ejes.</p>
+        <div class="tags">
+          <span class="tag hi">Ball Pivot</span>
+          <span class="tag hi">Embedded Magnets</span>
+          <span class="tag">Corner Piece</span>
+          <span class="tag">No Screws</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Diagrama mecánico -->
+  <div class="mech-grid fi">
+    <div class="mech-item">
+      <span class="mech-num">01</span>
+      <span class="mech-icon">⚙️</span>
+      <div class="mech-title">Esfera de Acero Central</div>
+      <p class="mech-desc">En el centro del cubo reside una bola de acero inoxidable que actúa como pivot omnidireccional. A diferencia de los ejes cruciformes convencionales, la esfera permite rotación suave en cualquier dirección sin puntos de fricción fijos.</p>
+    </div>
+    <div class="mech-item">
+      <span class="mech-num">02</span>
+      <span class="mech-icon">🧲</span>
+      <div class="mech-title">Imanes en Cada Corner</div>
+      <p class="mech-desc">Cada una de las 8 piezas corner lleva un imán neodimio embutido en su cavidad interior. La cara del imán orientada hacia el centro atrae la esfera de acero, generando la fuerza de retención que mantiene el puzzle ensamblado bajo tensión controlada.</p>
+    </div>
+    <div class="mech-item">
+      <span class="mech-num">03</span>
+      <span class="mech-icon">🔄</span>
+      <div class="mech-title">Rotación sin Tornillos</div>
+      <p class="mech-desc">Al girar una cara, las piezas corner se deslizan sobre la esfera superando momentáneamente la atracción magnética. Al completar el giro de 90° los imanes vuelven a alinearse con la bola, produciendo un clic magnético que centra la cara automáticamente.</p>
+    </div>
+  </div>
+
+  <!-- Vídeo del cubo en acción -->
+  <div class="video-label fi">
+    <span class="video-label-line"></span>
+    <span class="video-label-text">// DEMO EN ACCIÓN //</span>
+    <span class="video-label-line"></span>
+  </div>
+  <div class="video-wrapper fi">
+    <div class="cc tl"></div><div class="cc tr"></div>
+    <div class="cc bl"></div><div class="cc br"></div>
+    <video controls playsinline preload="metadata">
+      <source src="video/cubo2x2.mp4" type="video/mp4">
+      Tu navegador no soporta la reproducción de vídeo.
+    </video>
+  </div>
+
+</section>
+
+<div class="hline"></div>
+
+<!-- ══════════════════════════════════════ -->
 <!-- CONTACTO                               -->
 <!-- ══════════════════════════════════════ -->
 <section class="contact" id="contacto">
@@ -901,7 +1075,7 @@
   <div class="credits-line"></div>
   <div class="credits-text">
     Web creada con <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a>
-    &nbsp;//&nbsp; por Daniel Aparicio Vázquez
+    &nbsp;//&nbsp; Daniel Aparicio Vázquez
   </div>
   <div class="credits-line r"></div>
 </div>
